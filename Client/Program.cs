@@ -37,8 +37,9 @@ namespace Client
                     .All()
                         .With(x => x.CustomerName = Faker.Name.First())
                         .With(x => x.Type = Pick<BeverageType>.RandomItemFrom(drinkTypes))
+                        .With(x => x.WhenCompleted = null)
                     .Build();
-
+            Console.WriteLine("Client simulator, sending random orders to the cashier");
             Task.Run(() =>
             {
                 while (!mre.IsSet)
@@ -48,7 +49,7 @@ namespace Client
 
                     client.Execute(request);
 
-                    Thread.Sleep(random.Next(100,1500));
+                    Thread.Sleep(random.Next(1000,3000));
                 }
             });
 
